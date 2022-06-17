@@ -1,24 +1,33 @@
 pipeline {
-    agent {
-        any { image 'node:16.13.1-alpine' }
-    }
+    agent any
+
     stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
         stage('Test') {
             steps {
-                sh 'node --version'
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
             }
         }
     }
 }
 
-node {
-    checkout scm
+// node {
+//     checkout scm
 
-    docker.withRegistry('https://quay.io/rmegensgls', '6a299b60-c734-4eb4-8810-27fdcd20ae3d') {
+//     docker.withRegistry('https://quay.io/rmegensgls', '6a299b60-c734-4eb4-8810-27fdcd20ae3d') {
 
-        def customImage = docker.build("my-image:${env.BUILD_ID}")
+//         def customImage = docker.build("my-image:${env.BUILD_ID}")
 
-        /* Push the container to the custom Registry */
-        customImage.push()
-    }
-}
+//         /* Push the container to the custom Registry */
+//         customImage.push()
+//     }
+// }
